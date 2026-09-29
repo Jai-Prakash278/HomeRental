@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Base styles to maintain some of the original vibe if needed, but mostly relying on Tailwind now */
+body {
+    background: #f8fafc;
+    font-family: 'Inter', sans-serif;
+}
