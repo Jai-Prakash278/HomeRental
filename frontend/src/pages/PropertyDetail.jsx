@@ -267,14 +267,14 @@ const PropertyDetail = () => {
                                 {bookingError && <div className="mb-4 bg-rose-50 text-rose-600 p-3 rounded-lg text-sm font-semibold text-center">{bookingError}</div>}
                                 
                                 <div className="border border-slate-300 rounded-xl overflow-hidden mb-6">
-                                    <div className="flex border-b border-slate-300">
-                                        <div className="flex-1 p-3 flex flex-col border-r border-slate-300">
+                                    <div className="flex flex-col xl:flex-row border-b border-slate-300">
+                                        <div className="flex-1 p-3 flex flex-col border-b xl:border-b-0 xl:border-r border-slate-300 overflow-hidden">
                                             <label className="text-[0.7rem] font-bold mb-1 text-slate-800">CHECK-IN</label>
-                                            <input type="datetime-local" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} min={new Date().toISOString().slice(0, 16)} className="border-none outline-none text-sm text-slate-600 bg-transparent cursor-pointer" />
+                                            <input type="datetime-local" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} min={new Date().toISOString().slice(0, 16)} className="border-none outline-none text-sm text-slate-600 bg-transparent cursor-pointer w-full" />
                                         </div>
-                                        <div className="flex-1 p-3 flex flex-col">
+                                        <div className="flex-1 p-3 flex flex-col overflow-hidden">
                                             <label className="text-[0.7rem] font-bold mb-1 text-slate-800">CHECK-OUT</label>
-                                            <input type="datetime-local" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} min={checkIn || new Date().toISOString().slice(0, 16)} className="border-none outline-none text-sm text-slate-600 bg-transparent cursor-pointer" />
+                                            <input type="datetime-local" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} min={checkIn || new Date().toISOString().slice(0, 16)} className="border-none outline-none text-sm text-slate-600 bg-transparent cursor-pointer w-full" />
                                         </div>
                                     </div>
                                     <div className="p-3 flex flex-col">

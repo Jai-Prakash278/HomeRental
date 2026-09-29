@@ -40,15 +40,15 @@ const Navbar = () => {
             <ul className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row absolute md:relative top-full md:top-auto left-0 w-full md:w-auto min-h-[calc(100vh-80px)] md:min-h-0 bg-white/95 backdrop-blur-xl md:bg-transparent shadow-2xl md:shadow-none list-none gap-8 md:gap-3 lg:gap-5 items-center m-0 p-10 md:p-0 z-40 transition-all flex-wrap justify-center`}>
                 {isLoggedIn ? (
                     <>
-                        <li><Link to="/explore" className={getLinkClass('/explore')}>Explore</Link></li>
-                        <li><Link to="/trips" className={getLinkClass('/trips')}>Trip</Link></li>
-                        <li><Link to="/favorites" className={getLinkClass('/favorites')}>Favorite</Link></li>
+                        <li><Link to="/explore" className={getLinkClass('/explore')} onClick={() => setIsMobileMenuOpen(false)}>Explore</Link></li>
+                        <li><Link to="/trips" className={getLinkClass('/trips')} onClick={() => setIsMobileMenuOpen(false)}>Trip</Link></li>
+                        <li><Link to="/favorites" className={getLinkClass('/favorites')} onClick={() => setIsMobileMenuOpen(false)}>Favorite</Link></li>
                         
                         {user?.userType === 'host' && (
                             <>
-                                <li><Link to="/host/homes" className={getLinkClass('/host/homes')}>Property</Link></li>
-                                <li><Link to="/host/dashboard" className={getLinkClass('/host/dashboard')}>Overview</Link></li>
-                                <li><Link to="/host/bookings" className={getLinkClass('/host/bookings')}>Reservation</Link></li>
+                                <li><Link to="/host/homes" className={getLinkClass('/host/homes')} onClick={() => setIsMobileMenuOpen(false)}>Property</Link></li>
+                                <li><Link to="/host/dashboard" className={getLinkClass('/host/dashboard')} onClick={() => setIsMobileMenuOpen(false)}>Overview</Link></li>
+                                <li><Link to="/host/bookings" className={getLinkClass('/host/bookings')} onClick={() => setIsMobileMenuOpen(false)}>Reservation</Link></li>
                             </>
                         )}
                         <li className="w-full md:w-auto mt-4 md:mt-0">
