@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -9,6 +9,7 @@ const Navbar = () => {
     const { isLoggedIn, user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const { pathname } = useLocation();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const handleLogout = async () => {
         await logout();
@@ -26,7 +27,17 @@ const Navbar = () => {
                 </Link>
             </div>
 
-            <ul className="flex list-none gap-6 items-center m-0 p-0">
+            {/* Mobile menu button */}
+            <button 
+                className="md:hidden flex items-center p-2 text-slate-600 hover:text-indigo-600 bg-transparent border-none cursor-pointer"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                </svg>
+            </button>
+
+            <ul className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row absolute md:relative top-[80px] md:top-0 left-0 w-full md:w-auto min-h-[calc(100vh-80px)] md:min-h-0 bg-white/95 backdrop-blur-xl md:bg-transparent shadow-2xl md:shadow-none list-none gap-8 md:gap-6 items-center m-0 p-10 md:p-0 z-40 transition-all`}>
                 {isLoggedIn ? (
                     <>
                         <li><Link to="/explore" className={getLinkClass('/explore')}>Explore</Link></li>
@@ -43,23 +54,23 @@ const Navbar = () => {
                                 <li><Link to="/favorites" className={getLinkClass('/favorites')}>Favorite</Link></li>
                             </>
                         )}
-                        <li>
-                            <button onClick={handleLogout} className="px-5 py-2.5 rounded-xl font-semibold cursor-pointer border-none bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                        <li className="w-full md:w-auto mt-4 md:mt-0">
+                            <button onClick={handleLogout} className="w-full md:w-auto px-5 py-3 md:py-2.5 rounded-xl font-semibold cursor-pointer border-none bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg">
                                 Logout
                             </button>
                         </li>
                     </>
                 ) : (
                     <>
-                        <li><Link to="/" className={getLinkClass('/')}>Home</Link></li>
-                        <div className="flex items-center gap-4 ml-2">
-                            <li>
-                                <Link to="/login" className="px-5 py-2.5 rounded-xl font-bold cursor-pointer border-2 border-indigo-100 bg-white text-indigo-600 shadow-sm transition-all hover:border-indigo-600 hover:text-indigo-700 hover:-translate-y-0.5">
+                        <li><Link to="/" className={getLinkClass('/')} onClick={() => setIsMobileMenuOpen(false)}>Home</Link></li>
+                        <div className="flex flex-col md:flex-row items-center gap-4 md:ml-2 w-full md:w-auto mt-4 md:mt-0">
+                            <li className="w-full md:w-auto">
+                                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="block text-center w-full md:w-auto px-5 py-3 md:py-2.5 rounded-xl font-bold cursor-pointer border-2 border-indigo-100 bg-white text-indigo-600 shadow-sm transition-all hover:border-indigo-600 hover:text-indigo-700 hover:-translate-y-0.5 whitespace-nowrap">
                                     Login
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/signup" className="px-5 py-2.5 rounded-xl font-bold cursor-pointer border-none bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-[0_4px_15px_rgba(79,70,229,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(79,70,229,0.4)]">
+                            <li className="w-full md:w-auto">
+                                <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)} className="block text-center w-full md:w-auto px-5 py-3 md:py-2.5 rounded-xl font-bold cursor-pointer border-none bg-gradient-to-br from-indigo-500 to-indigo-600 text-white shadow-[0_4px_15px_rgba(79,70,229,0.3)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(79,70,229,0.4)] whitespace-nowrap">
                                     Sign Up
                                 </Link>
                             </li>

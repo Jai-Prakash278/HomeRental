@@ -14,6 +14,7 @@ import HostBookings from './pages/HostBookings';
 import HostDashboard from './pages/HostDashboard';
 import Favorites from './pages/Favorites';
 import LandingPage from './pages/LandingPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -23,17 +24,17 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/explore" element={<HomeList />} />
         <Route path="/property/:id" element={<PropertyDetail />} />
-        <Route path="/trips" element={<GuestDashboard />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/trips" element={<ProtectedRoute allowedRoles={['guest']}><GuestDashboard /></ProtectedRoute>} />
+        <Route path="/favorites" element={<ProtectedRoute allowedRoles={['guest']}><Favorites /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/host/dashboard" element={<HostDashboard />} />
-        <Route path="/host/homes" element={<HostHomesList />} />
-        <Route path="/host/addHome" element={<HomeForm />} />
-        <Route path="/host/edit-home/:id" element={<HomeForm />} />
-        <Route path="/host/bookings" element={<HostBookings />} />
+        <Route path="/host/dashboard" element={<ProtectedRoute allowedRoles={['host']}><HostDashboard /></ProtectedRoute>} />
+        <Route path="/host/homes" element={<ProtectedRoute allowedRoles={['host']}><HostHomesList /></ProtectedRoute>} />
+        <Route path="/host/addHome" element={<ProtectedRoute allowedRoles={['host']}><HomeForm /></ProtectedRoute>} />
+        <Route path="/host/edit-home/:id" element={<ProtectedRoute allowedRoles={['host']}><HomeForm /></ProtectedRoute>} />
+        <Route path="/host/bookings" element={<ProtectedRoute allowedRoles={['host']}><HostBookings /></ProtectedRoute>} />
       </Routes>
     </>
   );

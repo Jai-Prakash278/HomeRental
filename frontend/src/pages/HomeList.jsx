@@ -106,8 +106,8 @@ const HomeList = () => {
     return (
         <main className="px-[5%] pt-[100px] pb-16 min-h-screen max-w-[1600px] mx-auto">
             {/* SEARCH BAR */}
-            <div className="bg-white rounded-full shadow-[0_8px_25px_rgba(0,0,0,0.06)] border border-slate-100 p-1.5 mx-auto mb-12 max-w-[900px] flex justify-center animate-[slideIn_0.3s_ease-out] hover:shadow-[0_12px_35px_rgba(0,0,0,0.1)] transition-shadow duration-300">
-                <form className="flex flex-col md:flex-row items-center w-full justify-between gap-2 md:gap-0" onSubmit={handleSearch}>
+            <div className="bg-white rounded-3xl md:rounded-full shadow-[0_8px_25px_rgba(0,0,0,0.06)] border border-slate-100 p-4 md:p-1.5 mx-auto mb-12 max-w-[900px] flex justify-center animate-[slideIn_0.3s_ease-out] hover:shadow-[0_12px_35px_rgba(0,0,0,0.1)] transition-shadow duration-300">
+                <form className="flex flex-col md:flex-row items-center w-full justify-between gap-4 md:gap-0" onSubmit={handleSearch}>
 
                     <div className="flex flex-col flex-1 px-5 py-1 w-full md:w-auto hover:bg-slate-50 rounded-full transition-colors cursor-text focus-within:bg-white focus-within:shadow-[0_4px_15px_rgba(0,0,0,0.05)]">
                         <label className="text-[0.65rem] font-extrabold text-slate-800 uppercase tracking-wider mb-0.5 ml-1">Where</label>
