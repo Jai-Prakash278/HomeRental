@@ -209,6 +209,11 @@ const HomeList = () => {
                                         loading="lazy"
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
+                                    {user?._id === home.hostId && (
+                                        <div className="absolute top-4 left-4 bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md z-10">
+                                            Your Property
+                                        </div>
+                                    )}
                                     <div
                                         onClick={(e) => toggleFavourite(e, home)}
                                         className="absolute top-4 right-4 text-2xl drop-shadow-md transition-transform hover:scale-125 cursor-pointer z-10"

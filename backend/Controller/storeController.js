@@ -192,8 +192,6 @@ exports.getReviews = async (req, res, next) => {
 
 exports.postAddReview = async (req, res, next) => {
     try {
-        if (req.session.user.userType !== 'guest') return res.status(403).json({ error: 'Only guests can leave reviews.' });
-        
         const { homeId, bookingId, rating, comment } = req.body;
         console.log("RECEIVED REVIEW BODY:", req.body);
         

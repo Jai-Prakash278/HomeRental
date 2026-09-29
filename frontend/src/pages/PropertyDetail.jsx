@@ -65,10 +65,6 @@ const PropertyDetail = () => {
             return navigate('/login');
         }
         
-        if (user?.userType !== 'guest') {
-            return setBookingError('Only Guest accounts can make reservations.');
-        }
-
         if (!checkIn || !checkOut) {
             return setBookingError('Please select check-in and check-out dates.');
         }
@@ -138,7 +134,7 @@ const PropertyDetail = () => {
         images = [home.imageUrl.includes('/') || home.imageUrl.includes('\\\\') ? `${API_URL}/${home.imageUrl.replace(/\\/g, '/')}` : `${API_URL}/api/store/images/${home.imageUrl}`];
     }
 
-    const imageCountClass = images.length >= 5 ? 'grid-cols-4 grid-rows-2' : images.length >= 3 ? 'grid-cols-3 grid-rows-2' : images.length === 2 ? 'grid-cols-2' : 'grid-cols-1';
+
     const nights = calculateNights();
     const basePrice = nights > 0 ? home.price * nights : 0;
     const cleaningFee = home.cleaningFee || 0;
@@ -159,10 +155,28 @@ const PropertyDetail = () => {
             </div>
 
             {images.length > 0 && (
-                <div className={`grid gap-2 rounded-[20px] overflow-hidden mb-10 h-[250px] md:h-[420px] ${imageCountClass}`}>
-                    <img src={images[0]} alt="Primary" className={`w-full h-full object-cover ${images.length >= 3 ? 'col-span-2 row-span-2' : ''}`} />
-                    {images.slice(1, 5).map((img, idx) => (
-                        <img key={idx} src={img} alt={`Gallery ${idx+1}`} className="w-full h-full object-cover hidden md:block" />
+                <div className="flex overflow-x-auto md:overflow-hidden snap-x snap-mandatory gap-3 md:gap-2 rounded-2xl md:rounded-3xl mb-10 h-[280px] md:h-[450px] [&::-webkit-scrollbar]:hidden">
+                    {/* Primary Image */}
+                    <div className={`${images.length > 1 ? 'w-full md:w-1/2' : 'w-full'} flex-shrink-0 snap-center h-full overflow-hidden relative group md:rounded-none`}>
+                        <img src={images[0]} alt="Primary" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    </div>
+                    
+                    {/* Secondary Images (Desktop Grid) */}
+                    {images.length > 1 && (
+                        <div className="hidden md:grid w-1/2 h-full gap-2 grid-cols-2 grid-rows-2">
+                            {images.slice(1, 5).map((img, idx, arr) => (
+                                <div key={idx} className={`overflow-hidden relative group ${arr.length === 1 ? 'col-span-2 row-span-2' : arr.length === 2 ? 'col-span-2' : arr.length === 3 && idx === 0 ? 'col-span-2' : ''}`}>
+                                    <img src={img} alt={`Gallery ${idx+1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Secondary Images (Mobile Swipe Carousel) */}
+                    {images.length > 1 && images.slice(1, 5).map((img, idx) => (
+                        <div key={idx} className="md:hidden w-full flex-shrink-0 snap-center h-full overflow-hidden relative rounded-2xl">
+                            <img src={img} alt={`Gallery ${idx+1}`} className="w-full h-full object-cover" />
+                        </div>
                     ))}
                 </div>
             )}
@@ -234,8 +248,8 @@ const PropertyDetail = () => {
                 </div>
 
                 {/* BOOKING CARD SIDEBAR */}
-                <div className="md:sticky md:top-[100px] self-start fixed bottom-0 left-0 right-0 z-40 md:z-auto bg-white md:bg-transparent shadow-[0_-10px_30px_rgba(0,0,0,0.1)] md:shadow-none p-4 md:p-0">
-                    <div className="bg-white md:p-6 p-2 md:rounded-3xl rounded-none md:shadow-[0_10px_30px_rgba(0,0,0,0.1)] md:border border-slate-100 flex md:flex-col items-center md:items-stretch justify-between">
+                <div className="md:sticky md:top-[100px] self-start w-full mt-10 md:mt-0">
+                    <div className="bg-white p-6 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.1)] border border-slate-100 flex flex-col justify-between">
                         
                         {bookingSuccess ? (
                             <div className="text-center py-8">
@@ -246,13 +260,13 @@ const PropertyDetail = () => {
                             </div>
                         ) : (
                             <>
-                                <div className="mb-0 md:mb-6">
+                                <div className="mb-6">
                                     <h3 className="text-2xl font-bold text-slate-900">₹{home.price} <span className="text-base text-slate-500 font-medium">/ night</span></h3>
                                 </div>
                                 
                                 {bookingError && <div className="mb-4 bg-rose-50 text-rose-600 p-3 rounded-lg text-sm font-semibold text-center">{bookingError}</div>}
                                 
-                                <div className="hidden md:block border border-slate-300 rounded-xl overflow-hidden mb-6">
+                                <div className="border border-slate-300 rounded-xl overflow-hidden mb-6">
                                     <div className="flex border-b border-slate-300">
                                         <div className="flex-1 p-3 flex flex-col border-r border-slate-300">
                                             <label className="text-[0.7rem] font-bold mb-1 text-slate-800">CHECK-IN</label>
@@ -275,14 +289,14 @@ const PropertyDetail = () => {
 
                                 <button 
                                     disabled={bookingLoading}
-                                    className="md:w-full w-auto px-8 md:px-0 bg-gradient-to-br from-pink-500 to-rose-600 text-white border-none py-3 md:py-4 rounded-xl text-lg font-semibold cursor-pointer transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(225,29,72,0.4)] disabled:opacity-70 disabled:cursor-not-allowed" 
+                                    className="w-full bg-gradient-to-br from-pink-500 to-rose-600 text-white border-none py-4 rounded-xl text-lg font-semibold cursor-pointer transition-transform hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(225,29,72,0.4)] disabled:opacity-70 disabled:cursor-not-allowed" 
                                     onClick={handleReserve}
                                 >
                                     {bookingLoading ? 'Securing Dates...' : 'Reserve'}
                                 </button>
                                 
                                 {nights > 0 && (
-                                    <div className="hidden md:block mt-6 space-y-3">
+                                    <div className="mt-6 space-y-3">
                                         <p className="text-center text-sm text-slate-500 mb-4">You won't be charged yet</p>
                                         <div className="flex justify-between text-slate-600">
                                             <span>₹{home.price} × {nights} nights</span>

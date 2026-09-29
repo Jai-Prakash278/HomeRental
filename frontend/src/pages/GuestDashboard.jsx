@@ -40,10 +40,7 @@ const GuestDashboard = () => {
             return;
         }
 
-        if (user?.userType !== 'guest') {
-            navigate('/');
-            return;
-        }
+
 
         axios.get(`${API_URL}/api/bookings`)
             .then(res => {

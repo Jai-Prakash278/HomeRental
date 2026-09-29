@@ -3,10 +3,6 @@ const Home = require('../models/homeModel');
 
 exports.postCreateBooking = async (req, res) => {
     try {
-        if (req.session.user.userType !== 'guest') {
-            return res.status(403).json({ error: 'Only guests can create bookings.' });
-        }
-
         const { homeId, checkIn, checkOut, guests } = req.body;
         
         if (!homeId || !checkIn || !checkOut || !guests) {
@@ -34,7 +30,7 @@ exports.postCreateBooking = async (req, res) => {
         if (!home) {
             return res.status(404).json({ error: 'Property not found.' });
         }
-
+        
         if (guests < 1 || guests > home.maxGuests) {
             return res.status(400).json({ error: `Invalid number of guests. Maximum allowed is ${home.maxGuests}.` });
         }
@@ -84,10 +80,6 @@ exports.postCreateBooking = async (req, res) => {
 
 exports.getGuestBookings = async (req, res) => {
     try {
-        if (req.session.user.userType !== 'guest') {
-            return res.status(403).json({ error: 'Access denied.' });
-        }
-
         // Auto-update past CONFIRMED bookings to COMPLETED
         const today = new Date();
         await Booking.updateMany(

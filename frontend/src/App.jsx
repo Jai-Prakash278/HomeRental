@@ -24,8 +24,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/explore" element={<HomeList />} />
         <Route path="/property/:id" element={<PropertyDetail />} />
-        <Route path="/trips" element={<ProtectedRoute allowedRoles={['guest']}><GuestDashboard /></ProtectedRoute>} />
-        <Route path="/favorites" element={<ProtectedRoute allowedRoles={['guest']}><Favorites /></ProtectedRoute>} />
+        <Route path="/trips" element={<ProtectedRoute allowedRoles={['guest', 'host']}><GuestDashboard /></ProtectedRoute>} />
+        <Route path="/favorites" element={<ProtectedRoute allowedRoles={['guest', 'host']}><Favorites /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

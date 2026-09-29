@@ -20,7 +20,7 @@ const Navbar = () => {
         `font-semibold no-underline transition-colors ${pathname === path ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' : 'text-slate-600 hover:text-indigo-600 border-b-2 border-transparent pb-1'}`;
 
     return (
-        <nav className="fixed top-0 left-0 right-0 h-[80px] bg-white/80 backdrop-blur-xl border-b border-white/50 z-50 flex items-center justify-between px-[6%] shadow-sm">
+        <nav className="fixed top-0 left-0 right-0 min-h-[80px] py-4 md:py-0 bg-white/95 backdrop-blur-xl border-b border-slate-200 z-50 flex flex-wrap items-center justify-between px-[6%] shadow-sm gap-y-4">
             <div className="flex items-center">
                 <Link to="/" className="text-2xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent no-underline tracking-tight flex items-center gap-2">
                     <span className="text-3xl text-indigo-600">⌂</span> HomeRental
@@ -37,21 +37,18 @@ const Navbar = () => {
                 </svg>
             </button>
 
-            <ul className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row absolute md:relative top-[80px] md:top-0 left-0 w-full md:w-auto min-h-[calc(100vh-80px)] md:min-h-0 bg-white/95 backdrop-blur-xl md:bg-transparent shadow-2xl md:shadow-none list-none gap-8 md:gap-6 items-center m-0 p-10 md:p-0 z-40 transition-all`}>
+            <ul className={`${isMobileMenuOpen ? 'flex' : 'hidden'} md:flex flex-col md:flex-row absolute md:relative top-full md:top-auto left-0 w-full md:w-auto min-h-[calc(100vh-80px)] md:min-h-0 bg-white/95 backdrop-blur-xl md:bg-transparent shadow-2xl md:shadow-none list-none gap-8 md:gap-3 lg:gap-5 items-center m-0 p-10 md:p-0 z-40 transition-all flex-wrap justify-center`}>
                 {isLoggedIn ? (
                     <>
                         <li><Link to="/explore" className={getLinkClass('/explore')}>Explore</Link></li>
+                        <li><Link to="/trips" className={getLinkClass('/trips')}>Trip</Link></li>
+                        <li><Link to="/favorites" className={getLinkClass('/favorites')}>Favorite</Link></li>
                         
-                        {user?.userType === 'host' ? (
+                        {user?.userType === 'host' && (
                             <>
                                 <li><Link to="/host/homes" className={getLinkClass('/host/homes')}>Property</Link></li>
                                 <li><Link to="/host/dashboard" className={getLinkClass('/host/dashboard')}>Overview</Link></li>
                                 <li><Link to="/host/bookings" className={getLinkClass('/host/bookings')}>Reservation</Link></li>
-                            </>
-                        ) : (
-                            <>
-                                <li><Link to="/trips" className={getLinkClass('/trips')}>Trip</Link></li>
-                                <li><Link to="/favorites" className={getLinkClass('/favorites')}>Favorite</Link></li>
                             </>
                         )}
                         <li className="w-full md:w-auto mt-4 md:mt-0">

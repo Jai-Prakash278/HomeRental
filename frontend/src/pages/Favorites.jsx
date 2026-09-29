@@ -20,10 +20,7 @@ const Favorites = () => {
             return;
         }
 
-        if (user?.userType !== 'guest') {
-            navigate('/');
-            return;
-        }
+
 
         fetchFavorites();
     }, [isLoggedIn, user, navigate]);
