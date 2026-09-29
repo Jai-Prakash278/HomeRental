@@ -31,7 +31,25 @@ const sessionStore = new mongoDBStore({
 
 const cors = require('cors');
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        
+        const allowedOrigins = [
+            'http://localhost:5173', 
+            process.env.FRONTEND_URL
+        ];
+        
+        // Allow Vercel preview/production domains dynamically
+        if (origin.endsWith('.vercel.app')) {
+            return callback(null, true);
+        }
+        
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS blocked origin: ' + origin));
+        }
+    },
     credentials: true
 }));
 
